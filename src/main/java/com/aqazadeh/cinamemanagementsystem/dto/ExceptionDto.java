@@ -1,6 +1,7 @@
 package com.aqazadeh.cinamemanagementsystem.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Author: Rovshan Aghayev
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
  */
 
 public record ExceptionDto(
-        String message,
+        List<String> message,
         LocalDateTime time
 ) {
 }

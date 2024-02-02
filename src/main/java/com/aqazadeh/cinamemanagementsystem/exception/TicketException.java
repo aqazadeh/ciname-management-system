@@ -3,13 +3,12 @@ package com.aqazadeh.cinamemanagementsystem.exception;
 /**
  * Author: Rovshan Aghayev
  * Version: v1.0
- * Date: 30.01.2024
- * Time: 19:50
+ * Date: 1.02.2024
+ * Time: 21:40
  */
 
-public class ApplicationException extends RuntimeException{
-
-    public ApplicationException(ExceptionType message) {
+public class TicketException extends RuntimeException{
+    public TicketException(ExceptionType message) {
         super(message.getMessage());
     }
 }

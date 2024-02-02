@@ -3,6 +3,8 @@ package com.aqazadeh.cinamemanagementsystem.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * Author: Rovshan Aghayev
  * Version: v1.0
@@ -27,5 +29,8 @@ public class User {
     private String surname;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
 
 }

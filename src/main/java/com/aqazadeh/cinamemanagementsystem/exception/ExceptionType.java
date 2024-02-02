@@ -11,7 +11,10 @@ import lombok.Getter;
 @Getter
 public enum ExceptionType {
     USER_ALREADY_EXISTS("Username ve ya Email sistemde movcuddur"),
-    USER_NOT_FOUND("USER NOT FOUND");
+    USER_NOT_FOUND("USER NOT FOUND"),
+
+    MOVIE_NOT_FOUND("movie not found"),
+    TICKET_NOT_FOUND("ticket not found");
 
 
     private String message;

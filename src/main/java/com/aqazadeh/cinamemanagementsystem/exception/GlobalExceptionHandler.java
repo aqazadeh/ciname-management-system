@@ -20,18 +20,25 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ApplicationException.class)
-    private ResponseEntity<ExceptionDto> handler(ApplicationException exception) {
-        ExceptionDto exceptionDto = new ExceptionDto(exception.getMessage(), LocalDateTime.now());
+    @ExceptionHandler(UserException.class)
+    private ResponseEntity<ExceptionDto> handler(UserException exception) {
+        ExceptionDto exceptionDto = new ExceptionDto(List.of(exception.getMessage()), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MovieException.class)
+    private ResponseEntity<ExceptionDto> handler(MovieException exception) {
+        ExceptionDto exceptionDto = new ExceptionDto(List.of(exception.getMessage()), LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    private ResponseEntity<List<ExceptionDto>> handler(MethodArgumentNotValidException exception) {
-        List<ExceptionDto> exceptionDtoList = new ArrayList<>();
-        exception.getAllErrors().stream().forEach(e -> {
-           exceptionDtoList. add(new ExceptionDto(e.getObjectName() + " " +e.getDefaultMessage(), LocalDateTime.now()));
-        });
-        return new ResponseEntity<>(exceptionDtoList, HttpStatus.BAD_REQUEST);
+    private ResponseEntity<ExceptionDto> handler(MethodArgumentNotValidException exception) {
+
+        List<String> errorList = exception.getAllErrors().stream().map(e -> e.getObjectName() + " " + e.getDefaultMessage()).toList();
+
+        ExceptionDto exceptionDto = new ExceptionDto(errorList, LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
 
 }

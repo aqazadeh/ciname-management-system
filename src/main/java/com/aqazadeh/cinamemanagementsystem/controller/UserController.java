@@ -1,5 +1,6 @@
 package com.aqazadeh.cinamemanagementsystem.controller;
 
+import com.aqazadeh.cinamemanagementsystem.dto.TicketDto;
 import com.aqazadeh.cinamemanagementsystem.dto.UserDto;
 import com.aqazadeh.cinamemanagementsystem.request.CreateUserRequest;
 import com.aqazadeh.cinamemanagementsystem.request.UpdateUserRequest;
@@ -23,7 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
 
@@ -56,6 +57,12 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body("user silindi");
+    }
+
+    @GetMapping("/{id}/tickets")
+    public ResponseEntity<List<TicketDto>> getUserTickets(@PathVariable Long id) {
+        List<TicketDto> userTickets = userService.getUserTickets(id);
+        return ResponseEntity.ok(userTickets);
     }
 }
 

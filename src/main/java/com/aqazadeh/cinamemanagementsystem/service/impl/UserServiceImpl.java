@@ -1,7 +1,8 @@
 package com.aqazadeh.cinamemanagementsystem.service.impl;
 
+import com.aqazadeh.cinamemanagementsystem.dto.TicketDto;
 import com.aqazadeh.cinamemanagementsystem.dto.UserDto;
-import com.aqazadeh.cinamemanagementsystem.exception.ApplicationException;
+import com.aqazadeh.cinamemanagementsystem.exception.UserException;
 import com.aqazadeh.cinamemanagementsystem.exception.ExceptionType;
 import com.aqazadeh.cinamemanagementsystem.model.User;
 import com.aqazadeh.cinamemanagementsystem.repository.UserRepository;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(CreateUserRequest userRequest) {
         boolean present = userRepository.findByUsernameOrEmail(userRequest.username(), userRequest.email()).isPresent();
-        if(present) throw new ApplicationException(ExceptionType.USER_ALREADY_EXISTS);
+        if(present) throw new UserException(ExceptionType.USER_ALREADY_EXISTS);
 
         User user = CreateUserRequest.convert(userRequest);
 
@@ -48,6 +49,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<TicketDto> getUserTickets(Long userId) {
+        User user = getUserById(userId);
+        return TicketDto.convertList(user.getTickets());
+    }
+
+    @Override
     public UserDto updateUser(long id, UpdateUserRequest request) {
         User user = getUserById(id);
         User convertedUser = UpdateUserRequest.convert(request, user);
@@ -55,8 +62,8 @@ public class UserServiceImpl implements UserService {
         return UserDto.converter(updatedUser);
     }
 
-    private User getUserById(Long id) {
+    protected User getUserById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ApplicationException(ExceptionType.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserException(ExceptionType.USER_NOT_FOUND));
     }
 }

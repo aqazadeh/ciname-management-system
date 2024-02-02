@@ -1,5 +1,6 @@
 package com.aqazadeh.cinamemanagementsystem.service;
 
+import com.aqazadeh.cinamemanagementsystem.dto.TicketDto;
 import com.aqazadeh.cinamemanagementsystem.dto.UserDto;
 import com.aqazadeh.cinamemanagementsystem.request.CreateUserRequest;
 import com.aqazadeh.cinamemanagementsystem.request.UpdateUserRequest;
@@ -20,6 +21,8 @@ public interface UserService {
     UserDto getById(Long id);
 
     List<UserDto> getAll();
+
+    List<TicketDto> getUserTickets(Long userId);
 
     UserDto updateUser(long id, UpdateUserRequest request);
 }
